@@ -1,3 +1,5 @@
+ import org.w3c.dom.Node;
+
  import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
@@ -48,6 +50,7 @@ int ntileW = 60;
 int ntileH = 50;
 
 BuscaEmLargura buscalargura = new BuscaEmLargura();
+AStarPathFinder star = new AStarPathFinder();
 
 public GamePanel()
 {
@@ -184,8 +187,8 @@ public GamePanel()
 					//caminho=buscalargura.geraPath();
 					//System.out.println("NodoObjetivo "+buscalargura.nodoObjetivo);
 
-					AStarPathFinder star = new AStarPathFinder();
 					star.AStarPathFinder(mapa.mapa, mapa.Altura, mapa.Largura, 0, 0, mx, my);
+					caminho = star.geraPath();
 
 					long timefin = System.currentTimeMillis() - timeini;
 					System.out.println("Tempo Final: "+timefin);
@@ -402,6 +405,19 @@ private void gameRender(Graphics2D dbg)
 				int nx = oNodo.x;
 				int ny = oNodo.y;
 				
+				dbg.setColor(Color.RED);
+				dbg.fillRect(nx*16-mapa.MapX, ny*16-mapa.MapY, 16, 16);
+			}
+		}
+	}
+
+	if (star.nodeVisitados != null) {
+		synchronized (star.nodeVisitados) {
+			for (Iterator iterator = star.nodeVisitados.iterator(); iterator.hasNext();) {
+				AStarPathFinder.Node oNodo = (AStarPathFinder.Node) iterator.next();
+				int nx = oNodo.x;
+				int ny = oNodo.y;
+
 				dbg.setColor(Color.RED);
 				dbg.fillRect(nx*16-mapa.MapX, ny*16-mapa.MapY, 16, 16);
 			}

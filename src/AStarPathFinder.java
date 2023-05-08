@@ -6,6 +6,9 @@ public class AStarPathFinder
     public int M = 70; //70
     public int N = 100; //100
 
+    public Node nodeDestiny = null;
+    public LinkedList<Node> nodeVisitados = new LinkedList<>();
+
 
     // Função que verifica se é possível ir para a nova posição (row, col)
     // a partir da posição atual. Ela retorna falso se (row, col) nova
@@ -33,7 +36,6 @@ public class AStarPathFinder
 
         fila.add(new Node(inicioX, inicioY, 0, 0,null));
 
-
         // roda até a pilha não estar vazia
         while (!fila.isEmpty())
         {
@@ -42,12 +44,15 @@ public class AStarPathFinder
             Node atual = fila.poll();
             visitados[inicioX][inicioY] = true;
 
+            synchronized (nodeVisitados) {
+                nodeVisitados.add(atual);
+            }
 
             // se a celula destino é achada, atualiza a variavel min_dist e para.
             if (atual.x == fimX && atual.y == fimY)
             {
                 System.out.println("achou");
-                printaCaminho(atual);
+                this.nodeDestiny = atual;
                 return;
             }
 
@@ -78,6 +83,31 @@ public class AStarPathFinder
         System.out.println("A partir do inicio especificado não é possível chegar ao destino");
     }
 
+    public int [] geraPath() {
+        LinkedList<Integer> listaInts = new LinkedList<>();
+        Node atual = this.nodeDestiny;
+        listaInts.addFirst(atual.y);
+        listaInts.addFirst(atual.x);
+
+        while (atual.parent != null) {
+            atual = atual.parent;
+
+            listaInts.addFirst(atual.y);
+            listaInts.addFirst(atual.x);
+        }
+
+        int path[] = new int[listaInts.size()];
+        int index= 0;
+
+        for (Iterator iterator = listaInts.iterator(); iterator.hasNext();) {
+            Integer integer = (Integer) iterator.next();
+            path[index] = integer;
+            index++;
+        }
+
+        return path;
+    }
+
     //Trace back the path from the given node
     private void printaCaminho(Node node) {
         if (node.parent != null)
@@ -87,7 +117,7 @@ public class AStarPathFinder
 
 
     // Classe Node
-    private class Node implements Comparable<Node> {
+    public class Node implements Comparable<Node> {
         int x;
         int y;
         int dist;
