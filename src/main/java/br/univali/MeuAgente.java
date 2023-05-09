@@ -1,3 +1,5 @@
+package br.univali;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -78,7 +80,7 @@ public class MeuAgente extends Agente {
 	public void calculaIA(int DiffTime){
 		
 //		if(colidiu==true){
-//			if(GamePanel.rnd.nextInt(2)==0){
+//			if(br.univali.GamePanel.rnd.nextInt(2)==0){
 //				ang = ang + (Math.PI/2);
 //			}else{
 //				ang = ang - (Math.PI/2);
@@ -87,14 +89,14 @@ public class MeuAgente extends Agente {
 //			return;
 //		}
 //		
-//		double dx = GamePanel.mousex - X;
-//		double dy = GamePanel.mousey - Y;
+//		double dx = br.univali.GamePanel.mousex - X;
+//		double dy = br.univali.GamePanel.mousey - Y;
 //		
 //		double dist = dx*dx + dy*dy;
 //		
 //		if(dist<169){
 //			estado = 1;
-//			ang = Math.atan2(dy, dx)+Math.PI-(Math.PI/4)+((Math.PI/2)*GamePanel.rnd.nextDouble());
+//			ang = Math.atan2(dy, dx)+Math.PI-(Math.PI/4)+((Math.PI/2)*br.univali.GamePanel.rnd.nextDouble());
 //		}
 //		if(dist > 40000){
 //			estado = 0;

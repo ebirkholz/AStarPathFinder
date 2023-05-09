@@ -1,3 +1,4 @@
+package br.univali;
 
 public class Nodo {
 	int x;

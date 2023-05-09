@@ -1,3 +1,5 @@
+package br.univali;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.*;
@@ -18,8 +20,8 @@ public  class Mapa {
 
 	public Image TileSet = null;
 
-	int[][] mapa;
-	int[][] mapa2;
+	public int[][] mapa;
+	public int[][] mapa2;
 	
 	public Mapa(Image tileset,int tilestelaX,int tilestelaY) {
 		NumeroTilesX = tilestelaX;

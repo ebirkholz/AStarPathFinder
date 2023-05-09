@@ -1,16 +1,16 @@
- import org.w3c.dom.Node;
+package br.univali;
 
- import java.awt.*;
+import br.univali.searchalgorithms.AStar;
+import br.univali.searchalgorithms.HeuristicEnum;
+import br.univali.searchalgorithms.Node;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 
-import javax.swing.*;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 import java.awt.image.*;
-import javax.imageio.ImageIO;
 
 
 public class GamePanel extends Canvas implements Runnable
@@ -50,7 +50,7 @@ int ntileW = 60;
 int ntileH = 50;
 
 BuscaEmLargura buscalargura = new BuscaEmLargura();
-AStarPathFinder star = new AStarPathFinder();
+AStar aStar = null;
 
 public GamePanel()
 {
@@ -187,8 +187,8 @@ public GamePanel()
 					//caminho=buscalargura.geraPath();
 					//System.out.println("NodoObjetivo "+buscalargura.nodoObjetivo);
 
-					star.AStarPathFinder(mapa.mapa, mapa.Altura, mapa.Largura, 0, 0, mx, my);
-					caminho = star.geraPath();
+					aStar.execute(HeuristicEnum.EUCLIDEAN, mx, my);
+					caminho = aStar.geraPath();
 
 					long timefin = System.currentTimeMillis() - timeini;
 					System.out.println("Tempo Final: "+timefin);
@@ -271,7 +271,7 @@ public GamePanel()
 //		}
 //		
 //		
-//		listadeagentes.add(new MeuAgente(10+rnd.nextInt(780), 10+rnd.nextInt(480), cor));		
+//		listadeagentes.add(new br.univali.MeuAgente(10+rnd.nextInt(780), 10+rnd.nextInt(480), cor));
 //	}
 
 	meuHeroi = new MeuAgente(10, 10, Color.blue);
@@ -282,8 +282,9 @@ public GamePanel()
 	
 	mapa = new Mapa_Grid(100,100,ntileW, ntileH);
 	mapa.loadmapfromimage("/imagemlabirinto1000.png");
+	aStar = new AStar(mapa);
 	
-} // end of GamePanel()
+} // end of br.univali.GamePanel()
 
 public void startGame()
 // initialise and start the thread
@@ -411,10 +412,10 @@ private void gameRender(Graphics2D dbg)
 		}
 	}
 
-	if (star.nodeVisitados != null) {
-		synchronized (star.nodeVisitados) {
-			for (Iterator iterator = star.nodeVisitados.iterator(); iterator.hasNext();) {
-				AStarPathFinder.Node oNodo = (AStarPathFinder.Node) iterator.next();
+	if (aStar != null && aStar.visitedNodes != null) {
+		synchronized (aStar.visitedNodes) {
+			for (Iterator iterator = aStar.visitedNodes.iterator(); iterator.hasNext();) {
+				Node oNodo = (Node) iterator.next();
 				int nx = oNodo.x;
 				int ny = oNodo.y;
 
