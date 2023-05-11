@@ -57,8 +57,6 @@ public class AStar {
 
                 if (newNodes[i].x == endX && newNodes[i].y == endY) {
                     this.destiny = newNodes[i];
-                    System.out.println("ACHOW ");
-//                    osNodos.addAll(newNodesNodos);
                     return;
                 }
 
