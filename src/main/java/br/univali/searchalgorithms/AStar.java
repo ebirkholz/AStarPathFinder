@@ -63,7 +63,7 @@ public class AStar {
                 }
 
                 this.map.mapa2[newNodes[i].y][newNodes[i].x] = 1;
-                int heuristica = HeuristicEnum.calculate(heuristic, newNodes[i].x, newNodes[i].y, endX, endY);
+                int heuristica = HeuristicEnum.calculate(heuristic, this.startX, this.startY, newNodes[i].x, newNodes[i].y, endX, endY);
                 this.queue.add(new Node(newNodes[i].x, newNodes[i].y, newNodes[i].dist + 1, heuristica, newNodes[i].parent));
             }
         }
