@@ -187,7 +187,7 @@ public GamePanel()
 					//caminho=buscalargura.geraPath();
 					//System.out.println("NodoObjetivo "+buscalargura.nodoObjetivo);
 
-					aStar.execute(HeuristicEnum.BREAKING_TIES, mx, my);
+					aStar.execute(HeuristicEnum.EUCLIDEAN, mx, my);
 					caminho = aStar.geraPath();
 
 					long timefin = System.currentTimeMillis() - timeini;
