@@ -14,7 +14,5 @@ public class Nodo {
 		this.y = y;
 		this.pai = pai;
 		this.nivel = nivel;
-	}
-	
-	
+	}	
 }
